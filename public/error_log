@@ -1,0 +1,1 @@
+[18-Feb-2022 23:11:03 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 39759872 bytes) in /home/reydelos/apiliga.reydelosdeportes.com.mx/vendor/symfony/http-foundation/Response.php on line 381

@@ -317,4 +317,18 @@ class RolJuegosController extends Controller
         }
         return $this->crearRespuesta(2,"NO encontro la Jornada Activa",200);
     }
+
+    public function obtenerEquipos(Request $res)
+    {
+        $temporadaid = $res["TemporadaID"];
+        $resultado = DB::table("vw_equiposinscritos")
+        ->select("InscripcionID", "Inscripcion", "EquipoSeleccion as Equipo" )
+        ->where("TemporadaID",$temporadaid)
+        ->get();
+        if(count($resultado)>0){
+            
+            return $this->crearRespuesta(1,$resultado,200);
+        }
+        return $this->crearRespuesta(2,"Aún no hay Equipos en la Temporada",200);
+    }
 }

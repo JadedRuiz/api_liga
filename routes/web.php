@@ -66,5 +66,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         $router->get("obtenerJornadas","RolJuegosController@obtenerJornadas");
         $router->get("obtenerJornadaActual","RolJuegosController@obtenerJornadaActual");
         $router->post("obtenerStanding","RolJuegosController@obtenerStanding");
+        $router->post("obtenerEquipos","RolJuegosController@obtenerEquipos");
     });
 });

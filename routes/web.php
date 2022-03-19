@@ -61,4 +61,10 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get("getContra/{id_usuario}", "AdminController@getContra");
         
     });
+    $router->group(['prefix' => 'roljuegos'], function () use ($router) {
+        $router->post("obtenerResultados","RolJuegosController@obtenerResultados");
+        $router->get("obtenerJornadas","RolJuegosController@obtenerJornadas");
+        $router->get("obtenerJornadaActual","RolJuegosController@obtenerJornadaActual");
+        $router->post("obtenerStanding","RolJuegosController@obtenerStanding");
+    });
 });

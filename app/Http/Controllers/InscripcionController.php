@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Inscripcion;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class InscripcionController extends Controller
 {
@@ -22,13 +23,20 @@ class InscripcionController extends Controller
     public function obtenerInscripciones()
     {
         $temporada_actual = DB::table('ly_cattemporadas')->where("Actual",1)->first();
-        $inscripciones = Inscripcion::select("InscripcionID","Inscripcion","ce.Equipo", DB::raw("CONCAT(APatRep, ' ', AMatRep, ' ', NomRep) as Representante"),"TelRep","Editable","lcc.Categoria")
+        $inscripciones = Inscripcion::select("InscripcionID","Inscripcion","ce.Equipo", DB::raw("CONCAT(APatRep, ' ', AMatRep, ' ', NomRep) as Representante"),"TelRep","Editable","lcc.Categoria", DB::RAW("CONCAT(InscripcionID,'.jpg') as LogoEquipo"))
         ->leftJoin('ly_catcategorias as lcc',"lcc.CategoriaID","ly_encinscripciones.CategoriaID")
         ->leftJoin('ly_catequipos as ce', 'ce.EquipoID', '=', 'ly_encinscripciones.EquipoID')
         ->where("Inscripcion","<>",0)
         ->where("TemporadaID",$temporada_actual->TemporadaID)
         ->get();
         if(count($inscripciones)>0){
+            foreach ($inscripciones as $inscripcion){
+                if($inscripcion->LogoEquipo != ""){
+                    $inscripcion->LogoEquipo = Storage::disk('equipos')->url($inscripcion->InscripcionID);
+                }else{
+                    $inscripcion->LogoEquipo = Storage::disk('equipos')->url("avatarequipo.jpg");
+                }
+            }
             return $this->crearRespuesta(1,$inscripciones,200);
         }
         return $this->crearRespuesta(2,"Aún no han enviado solicitudes para esta temporada",200);

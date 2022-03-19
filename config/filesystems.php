@@ -49,13 +49,19 @@ return [
             'url' => env('APP_URL').'/storage/fotos',
             'visibility' => 'public',
         ],
+        'equipos' => [
+            'driver' => 'local',
+            'root' => storage_path('equipos'),
+            'url' => env('APP_URL').'/storage/equipos',
+            'visibility' => 'public',
+        ],
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
-
+        
     ],
 
 ];
